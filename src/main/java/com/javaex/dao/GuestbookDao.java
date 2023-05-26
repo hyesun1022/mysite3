@@ -14,9 +14,11 @@ public class GuestbookDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	//방명록 삭제
 	public void deleteGuest(GuestbookVo guestbookVo) {
 		System.out.println("GuestbookDao.deleteGuest()");
-		int count = sqlSession.delete("user.deleteGuest",guestbookVo);
+		System.out.println(guestbookVo);
+		int count = sqlSession.delete("user.delete",guestbookVo);
 		System.out.println(count);
 		
 	}

@@ -19,14 +19,16 @@ public class GuestbookController {
 	private GuestbookService guestbookService;
 	
 	//방명록삭제
-	public String delete() {
-		
-		return "";
+	@RequestMapping(value="/guestbook/delete", method= {RequestMethod.GET,RequestMethod.POST})
+	public String delete(@ModelAttribute GuestbookVo guestbookVo) {
+		System.out.println("GuestbookController.delete()");
+		guestbookService.deleteGuest(guestbookVo);
+		return "redirect:/guestbook/addList";
 	}
 	
 	//방명록삭제폼
 	@RequestMapping(value="/guestbook/deleteForm", method = {RequestMethod.GET,RequestMethod.POST})
-	public String deleteForm(@ModelAttribute GuestbookVo guestbookVo) {
+	public String deleteForm() {
 		System.out.println("GuestbookController.deleteForm()");
 		return "/guestbook/deleteForm";
 	}
