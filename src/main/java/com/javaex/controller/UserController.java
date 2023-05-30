@@ -73,18 +73,7 @@ public class UserController {
 	}
 	
 	
-	//회원정보폼
-	@RequestMapping(value="/user/modifyForm", method = {RequestMethod.GET,RequestMethod.POST})
-	public String modifyForm(HttpSession session, Model model) {
-		System.out.println("UserController.modifyForm()");
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		int no = authUser.getNo();
-		
-		UserVo userVo = userService.modifyForm(no);
-		model.addAttribute(userVo);
-		
-		return "/user/modifyForm";
-	}
+
 	
 	//회원정보수정
 	@RequestMapping(value="/user/modify", method= {RequestMethod.GET,RequestMethod.POST})
@@ -100,6 +89,19 @@ public class UserController {
 		return "redirect:/main";
 	}
 	
+	
+	//회원정보폼
+	@RequestMapping(value="/user/modifyForm", method = {RequestMethod.GET,RequestMethod.POST})
+	public String modifyForm(HttpSession session, Model model) {
+		System.out.println("UserController.modifyForm()");
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		int no = authUser.getNo();
+		
+		UserVo userVo = userService.modifyForm(no);
+		model.addAttribute(userVo);
+		
+		return "/user/modifyForm";
+	}
 	
 	//로그아웃
 	@RequestMapping(value="/user/logout",method= {RequestMethod.GET,RequestMethod.POST})

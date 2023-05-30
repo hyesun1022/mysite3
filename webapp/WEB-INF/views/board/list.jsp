@@ -21,7 +21,7 @@
 			<ul>
 				<li><a href="${pageContext.request.contextPath}/guestbook/addList">방명록</a></li>
 				<li><a href="">갤러리</a></li>
-				<li><a href="">게시판</a></li>
+				<li><a href="${pageContext.request.contextPath}/board/list">게시판</a></li>
 				<li><a href="">입사지원서</a></li>
 			</ul>
 			<div class="clear"></div>
@@ -71,48 +71,23 @@
 								<th>관리</th>
 							</tr>
 						</thead>
+						
+						<c:forEach items="${boardList}" var="boardVo">
 						<tbody>
 							<tr>
-								<td>123</td>
-								<td class="text-left"><a href="#">게시판 게시글입니다.</a></td>
-								<td>정우성</td>
-								<td>1232</td>
-								<td>2020-12-23</td>
+								<td>${boardVo.no}</td>
+								<td class="text-left"><a href="#">${boardVo.content}</a></td>
+								<td>${boardVo.user_name}</td>
+								<td>${boardVo.hit}</td>
+								<td>${boardVo.regDate}</td>
+					    <c:choose>
+					         <c:when test="${sessionScope.authUser.no==boardVo.no}">
 								<td><a href="">[삭제]</a></td>
-							</tr>
-							<tr>
-								<td>123</td>
-								<td class="text-left"><a href="#">게시판 게시글입니다.</a></td>
-								<td>정우성</td>
-								<td>1232</td>
-								<td>2020-12-23</td>
-								<td><a href="">[삭제]</a></td>
-							</tr>
-							<tr>
-								<td>123</td>
-								<td class="text-left"><a href="#">게시판 게시글입니다.</a></td>
-								<td>정우성</td>
-								<td>1232</td>
-								<td>2020-12-23</td>
-								<td><a href="">[삭제]</a></td>
-							</tr>
-							<tr>
-								<td>123</td>
-								<td class="text-left"><a href="#">게시판 게시글입니다.</a></td>
-								<td>정우성</td>
-								<td>1232</td>
-								<td>2020-12-23</td>
-								<td><a href="">[삭제]</a></td>
-							</tr>
-							<tr class="last">
-								<td>123</td>
-								<td class="text-left"><a href="#">게시판 게시글입니다.</a></td>
-								<td>정우성</td>
-								<td>1232</td>
-								<td>2020-12-23</td>
-								<td><a href="">[삭제]</a></td>
+						     </c:when>
+					    </c:choose>
 							</tr>
 						</tbody>
+						</c:forEach>
 					</table>
 		
 					<div id="paging">
@@ -134,8 +109,11 @@
 						
 						<div class="clear"></div>
 					</div>
-					<a id="btn_write" href="">글쓰기</a>
-				
+			    <c:choose>
+			        <c:when test="${sessionScope.authUser!=null}">
+					<a id="btn_write" href="${pageContext.request.contextPath}/board/write">글쓰기</a>
+					</c:when>
+				</c:choose>
 				</div>
 				<!-- //list -->
 			</div>
