@@ -56,8 +56,8 @@
 				<div id="list">
 					<form action="${pageContext.request.contextPath}/board/list" method="get">
 						<div class="form-group text-right">
-							<input type="text">
-							<button type="submit" id=btn_search>검색</button>
+							<input type="text" name="keyword">
+							<button type="submit" id=btn_search >검색</button>
 						</div>
 					</form>
 					<table >
@@ -76,20 +76,20 @@
 						<tbody>
 							<tr>
 								<td>${boardVo.no}</td>
-								<td class="text-left"><a href="#">${boardVo.content}</a></td>
+								<td class="text-left"><a href="#">${boardVo.title}</a></td>
 								<td>${boardVo.user_name}</td>
 								<td>${boardVo.hit}</td>
-								<td>${boardVo.regDate}</td>
-					    <c:choose>
-					         <c:when test="${sessionScope.authUser.no==boardVo.no}">
-								<td><a href="">[삭제]</a></td>
-						     </c:when>
-					    </c:choose>
+								<td>${boardVo.regDate} / 글작성자번호:${boardVo.user_no}/ 세션:${sessionScope.authUser.no}</td>
+								<td>
+								    <!-- 글작성자 번호 세션의 사용자번호 같으면 삭제버튼이 보인다 -->
+								    <c:if test='${boardVo.user_no == sessionScope.authUser.no}'>
+								    <a href="">[삭제]</a></td>
+								    </c:if>
+								</td>
 							</tr>
 						</tbody>
 						</c:forEach>
 					</table>
-		
 					<div id="paging">
 						<ul>
 							<li><a href="">◀</a></li>
@@ -111,7 +111,7 @@
 					</div>
 			    <c:choose>
 			        <c:when test="${sessionScope.authUser!=null}">
-					<a id="btn_write" href="${pageContext.request.contextPath}/board/write">글쓰기</a>
+					<a id="btn_write" href="${pageContext.request.contextPath}/board/writeForm">글쓰기</a>
 					</c:when>
 				</c:choose>
 				</div>

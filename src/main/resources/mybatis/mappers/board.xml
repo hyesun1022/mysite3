@@ -11,44 +11,35 @@
                     hit,
                     reg_Date,
                     user_no)
-        values (seq_users_no.nextval,
+        values (seq_board_no.nextval,
                 #{title},
                 #{content},
-                 0,
-                 sysdate,
-                 #{user_no})
+                0,
+                sysdate,
+                #{user_no})
        ]]>
     </insert>
     
 
-	<!-- 게시판글쓰기폼 (세션 회원정보 가져오기)
-	<select id="selectBoardbyUser" parameterType="int" resultType="com.javaex.vo.BoardVo">
-      <![CDATA[
-        select  
-               a.user_no,
-               b.name user_name
-        from board  a
-        inner join users  b
-        on a.user_no = b.no
-        where a.user_no= #{no}	
-      ]]>
-	</select> -->
-	
-
-    <!-- 게시판 전체 리스트  -->
-	<select id="selectAllList" parameterType="int" resultType="com.javaex.vo.BoardVo">
-	<![CDATA[
+    <!-- 게시판 전체 리스트와 검색 -->
+	<select id="selectList" parameterType="string" resultType="com.javaex.vo.BoardVo">
+	  <![CDATA[
         select a.no, 
                a.title,
                a.content,
+               b.name user_name,
                a.hit,
-               a.reg_date regDate,
-               a.user_no,
-               b.name user_name
-        from board  a
-        inner join users  b
-        on a.user_no = b.no	
-	]]>
+               to_char(a.reg_date, 'YYYY-MM-DD HH:MI') regDate,
+               a.user_no
+        from board  a, users  b
+        where a.user_no = b.no
+       ]]>   
+        <if test=" value != '' ">
+        and a.title like '%'||#{keyword}||'%'
+        </if>
+      <![CDATA[  
+        order by reg_date desc	
+	  ]]>
 	</select>
 
 </mapper>

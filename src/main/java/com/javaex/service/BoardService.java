@@ -16,26 +16,17 @@ public class BoardService {
 	private BoardDao boardDao;
 	
 	//게시판 글쓰기
-	public void write(BoardVo boardVo) {
+	public int write(BoardVo boardVo) {
 		System.out.println("BoardService.write()");
-		boardDao.insertBoard(boardVo);
-		System.out.println(boardVo);
+		int count = boardDao.insertBoard(boardVo);
+		return count;
 	}
-	
-	//게시판 글쓰기폼
-//	public BoardVo writeForm(int no) {
-//		System.out.println("BoardService.writeForm()");
-//		
-//		BoardVo boardVo = boardDao.selectUser(no);
-//		return boardVo;
-//		
-//	}
 
-	//게시판 전체리스트
-	public List<BoardVo> getBoardList(){
+	//게시판 전체리스트와 검색
+	public List<BoardVo> getList(String keyword){
 		System.out.println("BoardService.getBoardList()");
 		
-		List<BoardVo> boardList = boardDao.selectList();
+		List<BoardVo> boardList = boardDao.selectList(keyword);
 		return boardList;
 	}
 }

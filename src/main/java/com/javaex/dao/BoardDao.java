@@ -15,25 +15,18 @@ public class BoardDao {
 	private SqlSession sqlSession;
 	
 	//게시판 글쓰기
-	public void insertBoard(BoardVo boardVo) {
+	public int insertBoard(BoardVo boardVo) {
 		System.out.println("BoardDao.insertBoard()");
-//		int count = sqlSession.insert("insertBoard",boardVo);
-//		System.out.println(count);
+		System.out.println(boardVo);
+		int count = sqlSession.insert("board.insertBoard",boardVo);
+        return count;
 	}
 	
-	//게시판 글쓰기폼(회원정보1명 가져오기)
-//	public BoardVo selectUser(int no) {
-//		System.out.println("BoardDao.selectUser()");
-//		
-//		BoardVo boardVo = sqlSession.selectOne("selectBoardbyUser",no);
-//		return boardVo;
-//	}
-	
-	//게시판 전체리스트
-	public List<BoardVo> selectList(){
+	//게시판 전체리스트와 검색
+	public List<BoardVo> selectList(String keyword){
 		System.out.println("BoardDao.selectList()");
 		
-		List<BoardVo> boardList = sqlSession.selectList("selectAllList");
+		List<BoardVo> boardList = sqlSession.selectList("board.selectList",keyword);
 		return boardList;
 	}
 

@@ -58,15 +58,14 @@
 					<form action="${pageContext.request.contextPath}/board/write" method="get">
 						<!-- 제목 -->
 						<div class="form-group">
-						    <input type="hidden" id="" name="user_no" value="${requestScope.boardVo.user_no}">
-						    <input type="hidden" id="" name="user_name" value="${requestScope.boardVo.user_name}">
+						    <input type="hidden" id="" name="user_no" value="${sessionScope.authUser.no}">
 							<label class="form-text" for="txt-title">제목</label>
 							<input type="text" id="txt-title" name="title" value="" placeholder="제목을 입력해 주세요">
 						</div>
 					
 						<!-- 내용 -->
 						<div class="form-group">
-							<textarea id="txt-content" name="content"></textarea>
+							<textarea id="txt-content" name="content" value=""></textarea>
 						</div>
 						
 						<a id="btn_cancel" href="${pageContext.request.contextPath}/board/list">취소</a>
