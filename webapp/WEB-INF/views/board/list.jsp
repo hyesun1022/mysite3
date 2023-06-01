@@ -76,14 +76,14 @@
 						<tbody>
 							<tr>
 								<td>${boardVo.no}</td>
-								<td class="text-left"><a href="#">${boardVo.title}</a></td>
+								<td class="text-left"><a href="${pageContext.request.contextPath}/board/modifyForm?no=${boardVo.no}">${boardVo.title}</a></td>
 								<td>${boardVo.user_name}</td>
 								<td>${boardVo.hit}</td>
 								<td>${boardVo.regDate} / 글작성자번호:${boardVo.user_no}/ 세션:${sessionScope.authUser.no}</td>
 								<td>
 								    <!-- 글작성자 번호 세션의 사용자번호 같으면 삭제버튼이 보인다 -->
 								    <c:if test='${boardVo.user_no == sessionScope.authUser.no}'>
-								    <a href="">[삭제]</a></td>
+								    <a href="${pageContext.request.contextPath}/board/delete?no=${boardVo.no}">[삭제]</a></td>
 								    </c:if>
 								</td>
 							</tr>

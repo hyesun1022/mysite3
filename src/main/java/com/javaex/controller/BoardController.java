@@ -22,7 +22,36 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
+	//게시판 수정
+	@RequestMapping(value="/board/modify", method = {RequestMethod.GET,RequestMethod.POST})
+	public String modify(@ModelAttribute BoardVo boardVo) {
+		System.out.println("BoardController.modify()");
+		System.out.println(boardVo);
+		return "/board/modifyForm";
+	}
+	
+	
+	//게시판 수정폼
+	@RequestMapping(value="/board/modifyForm",method = {RequestMethod.GET,RequestMethod.POST})
+	public String modifyForm(@RequestParam("no") int no,Model model) {
+		System.out.println("BoardController.modifyForm()");
+		BoardVo boardVo = boardService.modifyForm(no);
+		System.out.println(boardVo);
+		
+		model.addAttribute("boardVo", boardVo);
+		return "/board/modifyForm";
+	}
+	
+	
 	//게시판 삭제
+	@RequestMapping(value="/board/delete",method= {RequestMethod.GET,RequestMethod.POST})
+	public String delete(HttpSession session,@ModelAttribute BoardVo boardVo) {
+		System.out.println("BoardController.delete()");
+		boardService.delete(boardVo);
+		
+		return "redirect:/board/list";
+	}
+	
 	
 	//게시판 글쓰기
 	@RequestMapping(value="/board/write",method = {RequestMethod.GET,RequestMethod.POST})
@@ -51,8 +80,5 @@ public class BoardController {
 		
 		return "/board/list";
 	}
-	
-
-	
 	
 }
