@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.UserService;
 import com.javaex.vo.UserVo;
@@ -113,6 +114,16 @@ public class UserController {
 		session.invalidate(); 
 		
 		return "redirect:/main";
+	}
+	
+	//아이디 중복체크
+	@ResponseBody
+	@RequestMapping(value="/user/idcheck",method = {RequestMethod.GET,RequestMethod.POST})
+	public UserVo idcheck(@RequestParam("id") String id) {
+		System.out.println("UserController.idcheck()");
+		UserVo userVo = userService.idcheck(id);
+		
+		return userVo;
 	}
 	
 }

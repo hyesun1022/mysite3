@@ -43,4 +43,12 @@ public class UserDao {
     }
     
     
+    //아이디 중복체크
+    public UserVo selectUser(String id) {
+    	System.out.println("UserDao.selectUser");
+    	UserVo userVo = sqlSession.selectOne("user.selectUserById",id);
+    	
+    	return userVo;
+    }
+    
 }

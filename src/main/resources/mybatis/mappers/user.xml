@@ -2,6 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="user">
+	<!-- 회원정보수정폼 (세션 회원정보 가져오기) -->
+	<select id="selectUserById" parameterType="String"
+		resultType="com.javaex.vo.UserVo">
+      <![CDATA[
+          select no,
+                 id 
+          from users
+          where id = #{id} 
+      ]]>
+	</select>
+
+
 	<!-- 로그인 (세션 저장용 회원정보 가져오기) -->
 	<select id="selectUser" parameterType="com.javaex.vo.UserVo"
 		resultType="com.javaex.vo.UserVo">
@@ -58,8 +70,6 @@
 	  ]]>
 	</insert>
 
-
-
 	<!-- 방명록 등록 -->
 	<insert id="insertGuest"
 		parameterType="com.javaex.vo.GuestbookVo">
@@ -77,7 +87,6 @@
                     sysdate)	    
 	    ]]>
 	</insert>
-
 
 	<!-- 방명록 전체 리스트 가져오기 -->
 	<select id="selectList" parameterType="int"
@@ -101,8 +110,6 @@
              and password= #{password}  
         ]]>
     </delete>
-
-
 
 
 </mapper>

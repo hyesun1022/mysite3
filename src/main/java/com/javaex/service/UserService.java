@@ -44,4 +44,13 @@ public class UserService {
 		int count = userDao.updateUser(userVo);
 		return count;
 	}
+	
+	//아이디 중복체크
+	public UserVo idcheck(String id) {
+		System.out.println("UserService.idcheck()");
+		UserVo userVo = userDao.selectUser(id);
+		
+		return userVo;
+	}
+	
 }
