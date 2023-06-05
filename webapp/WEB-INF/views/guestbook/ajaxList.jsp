@@ -152,32 +152,13 @@ $("#btnSubmit").on("click", function(){
 			
 			if(jsonResult.result == "success"){
 				//정상처리
-				console.log(jsonResult.data);
-				console.log(jsonResult.data.name); //데이타 꺼내기
 				
-				var str ="";
-				str += '<table class="guestRead">';
-				str += '  <colgroup>';
-				str += '	  <col style="width: 10%;">';
-				str += '	  <col style="width: 40%;">';
-				str += '	  <col style="width: 40%;">';
-				str += '	  <col style="width: 10%;">';
-				str += '  </colgroup>';
+				render(jsonResult.data); //리스트에 추가
 				
-				str += '  <tr>';
-				str += '      <td>' + jsonResult.data.no +'</td>';
-				str += '      <td>' + jsonResult.data.name + '</td>';
-				str += '      <td>' + jsonResult.data.regDate + '</td>';
-				str += '      <td><a href="${pageContext.request.contextPath}/guestbook/deleteForm?no=${jsonResult.data.no}">[삭제]</a></td>';
-				str += '  </tr>';
-
-				str += '  <tr>';
-				str += '      <td colspan=4 class="text-left">' + jsonResult.data.content + '</td>';
-				str += '  </tr>';
-				str += '</table>';
-				
-				$("#guestbookListArea").prepend(str);
-				
+				//등록폼 비우기
+				$("[name='name']").val("");
+				$("[name='password']").val("");
+				$("[name='content']").val("");
 			}else{
 				//오류처리
 			}
@@ -187,6 +168,37 @@ $("#btnSubmit").on("click", function(){
 			console.error(status + " : " + error);
 		}
     });
+	
+	
+	//방명록 리스트 그리기
+	function render(guestbookVo){
+		
+		var str ="";
+		str += '<table class="guestRead">';
+		str += '  <colgroup>';
+		str += '	  <col style="width: 10%;">';
+		str += '	  <col style="width: 40%;">';
+		str += '	  <col style="width: 40%;">';
+		str += '	  <col style="width: 10%;">';
+		str += '  </colgroup>';
+		
+		str += '  <tr>';
+		str += '      <td>' + guestbookVo.no +'</td>';
+		str += '      <td>' + guestbookVo.name + '</td>';
+		str += '      <td>' + guestbookVo.regDate + '</td>';
+		str += '      <td><a href="${pageContext.request.contextPath}/guestbook/deleteForm?no=${jsonResult.data.no}">[삭제]</a></td>';
+		str += '  </tr>';
+
+		str += '  <tr>';
+		str += '      <td colspan=4 class="text-left">' + guestbookVo.content + '</td>';
+		str += '  </tr>';
+		str += '</table>';
+		
+		$("#guestbookListArea").prepend(str);
+	}
+	
+	
+	
 });
 
 </script>
