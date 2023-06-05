@@ -26,8 +26,9 @@ public class BoardController {
 	@RequestMapping(value="/board/modify", method = {RequestMethod.GET,RequestMethod.POST})
 	public String modify(@ModelAttribute BoardVo boardVo) {
 		System.out.println("BoardController.modify()");
-		System.out.println(boardVo);
-		return "/board/modifyForm";
+		
+		boardService.modify(boardVo);
+		return "redirect:/board/list";
 	}
 	
 	
@@ -36,7 +37,6 @@ public class BoardController {
 	public String modifyForm(@RequestParam("no") int no,Model model) {
 		System.out.println("BoardController.modifyForm()");
 		BoardVo boardVo = boardService.modifyForm(no);
-		System.out.println(boardVo);
 		
 		model.addAttribute("boardVo", boardVo);
 		return "/board/modifyForm";

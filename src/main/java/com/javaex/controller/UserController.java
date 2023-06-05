@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.UserService;
+import com.javaex.vo.JsonResult;
 import com.javaex.vo.UserVo;
 
 @Controller
@@ -119,11 +120,25 @@ public class UserController {
 	//아이디 중복체크
 	@ResponseBody
 	@RequestMapping(value="/user/idcheck",method = {RequestMethod.GET,RequestMethod.POST})
-	public UserVo idcheck(@RequestParam("id") String id) {
+	public JsonResult idcheck(@RequestParam("id") String id) {
 		System.out.println("UserController.idcheck()");
-		UserVo userVo = userService.idcheck(id);
 		
-		return userVo;
+		boolean data = userService.idcheck(id);
+		
+		JsonResult jsonResult = new JsonResult();
+		jsonResult.success(data);
+		
+		/* 강제적으로 성공 데이타 입력
+		jsonResult.setResult("success");
+		jsonResult.setData(data);
+		
+		강제적으로 실패 데이타 입력
+		jsonResult.setResult("fail");
+		jsonResult.setFailMsg("통신오류");
+		*/
+		
+		System.out.println(jsonResult);
+		
+		return jsonResult;
 	}
-	
 }

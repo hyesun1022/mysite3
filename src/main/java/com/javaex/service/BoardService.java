@@ -15,6 +15,13 @@ public class BoardService {
 	@Autowired
 	private BoardDao boardDao;
 	
+	//게시판 수정
+	public void modify(BoardVo boardVo) {
+		System.out.println("BoardService.modify()");
+		
+		boardDao.updateBoard(boardVo);
+	}
+	
 	//게시판 수정폼
 	public BoardVo modifyForm(int no) {
 		System.out.println("BoardService.modifyForm()");

@@ -72,7 +72,7 @@
 								placeholder="아이디를 입력하세요" autofocus required
 								onKeypress="javascript:if(event.keyCode==13) {search_onclick_submit}">
 							<button type="button" id="btnIdCheck">중복체크</button>
-							<p id="idcheckMsg"></p>
+							<p id="idcheckMsg" align="center" ></p>
 						</div>
 
 						<!-- 비밀번호 -->
@@ -148,31 +148,30 @@
 			data : {id: id},
 	
 			dataType : "json",
-			success : function(userVo){
-				console.log(userVo);
+			success : function(jsonResult){
+				
+				console.log(jsonResult);
 				
 				/*성공시 처리해야될 코드 작성*/
-				if(userVo == null){
-					$("#idcheckMsg").html(id+"는 사용가능 합니다.");
+	 			if(jsonResult.result == "success"){ //처리성공()
+	 				//사용가능한지 불가능한지 표현한다.
+					if(jsonResult.data=true){
+						//데이타가 null 경우 true 이므로 아이디가 사용가능하다고 출력(아이디 사용가능)
+						$("#idcheckMsg").html(id+"는 사용가능 합니다.");
+					}else{
+						//데이타가 있으므로 false 이므로 아이디가 사용 불가능
+						$("#idcheckMsg").html(id+"는 사용중입니다.");
+					}
 				}else{
-					$("#idcheckMsg").html(id+"는 사용중니다.");
+					//혹시라도 result가 fail 나올 경우 메세지 출력
+					alert("서버요청실패");
 				}
 			},
-			error : function(XHR, status, error) {
+			error : function(XHR, status, error) { 
 				console.error(status + " : " + error);
 				//alert("서버요청실패");
 			}
 	    });
-
-    	
     });
-
-
-
 </script>
-
-
-
-
-
 </html>

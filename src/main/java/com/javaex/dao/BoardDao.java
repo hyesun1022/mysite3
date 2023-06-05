@@ -14,6 +14,14 @@ public class BoardDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	//게시판 글수정
+	public int updateBoard(BoardVo boardVo) {
+		System.out.println("BoardDao.updateBoard()");
+		
+		int count = sqlSession.update("board.updateBoard", boardVo);
+		return count;
+	}
+	
 	
 	//게시판 글수정폼(하나의 게시판글 가져오기)
 	public BoardVo selectBoard(int no) {

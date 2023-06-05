@@ -53,4 +53,7 @@ public class GuestbookController {
 		
 		return "redirect:/guestbook/addList";
 	}
+	
+
+	
 }

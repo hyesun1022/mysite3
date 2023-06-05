@@ -60,7 +60,7 @@
 						<!-- 작성자 -->
 						<div class="form-group">
 							<span class="form-text">작성자</span>
-							<input type="hidden" id="" name="user_name">
+							<input type="hidden" id="" name="no" value="${requestScope.boardVo.no}">
 							<span class="form-value">${boardVo.user_name}</span>
 						</div>
 						
