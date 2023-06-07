@@ -155,7 +155,7 @@
 				/*성공시 처리해야될 코드 작성*/
 	 			if(jsonResult.result == "success"){ //처리성공()
 	 				//사용가능한지 불가능한지 표현한다.
-					if(jsonResult.data=true){
+					if(jsonResult.data==true){
 						//데이타가 null 경우 true 이므로 아이디가 사용가능하다고 출력(아이디 사용가능)
 						$("#idcheckMsg").html(id+"는 사용가능 합니다.");
 					}else{

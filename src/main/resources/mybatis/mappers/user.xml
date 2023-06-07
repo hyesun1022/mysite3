@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="user">
-	<!-- 회원정보수정폼 (세션 회원정보 가져오기) -->
+	<!-- 아이디 중복체크 -->
 	<select id="selectUserById" parameterType="String"
 		resultType="com.javaex.vo.UserVo">
       <![CDATA[

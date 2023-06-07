@@ -9,9 +9,15 @@
 <link href="${pageContext.request.contextPath}/assets/css/mysite.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/guestbook.css" rel="stylesheet" type="text/css">
 
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
-	
+<!-- 부트스트랩 css -->
+<link href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+
+<!-- jquery -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
+
+<!-- 부트스트랩 js -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.js"></script>
+
 </head>
 
 <body>
@@ -96,7 +102,9 @@
 								<td>${guestbookVo.no}</td>
 								<td>${guestbookVo.name}</td>
 								<td>${guestbookVo.regDate}</td>
-								<td><a href="${pageContext.request.contextPath}/guestbook/deleteForm?no=${guestbookVo.no}">[삭제]</a></td>
+								<td>
+								    <button type="button" class="btn btn-primary btn-sm btnModal" data-delno="${guestbookVo.no}">삭제</button>
+								</td>
 							</tr>
 							<tr>
 								<td colspan=4 class="text-left">${guestbookVo.content}</td>
@@ -117,10 +125,96 @@
 
 	</div>
 	<!-- //wrap -->
+	
+<!-- 삭제폼 모달창 -------------------------------------------------------->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">삭제 모달창</h4>
+      </div>
+      <div class="modal-body">
+        <input id="modalPassword" type="password" name=""><br> <!-- 비밀번호 입력 -->
+        <input id="modalNo" type="text" name="no">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+        <button id="btnDel" type="button" class="btn btn-danger">삭제</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 삭제폼 끝 -->
 
 </body>
 
 <script type="text/javascript">
+
+//모달창에 있는 삭제 버튼 클릭했을때(진짜 삭제)
+$("#btnDel").on("click","", function(){
+	console.log("삭제버튼 클릭");
+	
+	//서버에 데이타보내기
+	//password,no --> 모달창에 보내기
+	
+	//데이타모으기
+	var password = $("#modalPassword").val();
+	var no = $("#modalNo").val();
+	
+	//객체로 만들기
+	var guestVo = {
+	    password: password,
+	    no: no
+	};
+	
+	//요청
+	$.ajax({
+		
+		url : "${pageContext.request.contextPath }/api/guestbook/remove",		
+		type : "post",
+		data : guestVo,
+
+		dataType : "json",
+		success : function(Result){
+			/*성공시 처리해야될 코드 작성*/
+
+		},
+		error : function(XHR, status, error) { 
+			console.error(status + " : " + error);
+		}
+    });
+	
+});
+
+
+
+
+//삭제 모달창 호출 버튼 ->>모달창 뜸
+$("#guestbookListArea").on("click",".btnModal",function(){  //새로 추가된 방명록의 삭제를 하기위해 부모 div 아이디에 범위를 주고 클래스 btnModal에 이벤트를 추가
+	console.log("모달창 호출버튼 클릭");
+	
+	//초기화
+	$("#modalPassword").val("");
+	$("#modalNo").val("");
+	
+	//방명록 글번호 input창에 가져오기
+	//삭제버튼캐그에서 no값 가져오기 data("no")
+	var no = $(this).data("delno");
+	console.log(no);
+	
+	//모달창 input태그에 no값 넣기
+	$("#modalNo").val(no);
+	
+	//모달창 호출
+	$('#myModal').modal('show');
+});
+
+
 
 //방명록 저장 버튼 클릭할때
 $("#btnSubmit").on("click", function(){
@@ -186,7 +280,7 @@ $("#btnSubmit").on("click", function(){
 		str += '      <td>' + guestbookVo.no +'</td>';
 		str += '      <td>' + guestbookVo.name + '</td>';
 		str += '      <td>' + guestbookVo.regDate + '</td>';
-		str += '      <td><a href="${pageContext.request.contextPath}/guestbook/deleteForm?no=${jsonResult.data.no}">[삭제]</a></td>';
+		str += '      <td><button type="button" class="btn btn-primary btn-sm btnModal" data-delno="'+ guestbookVo.no +'">삭제</button></td>';
 		str += '  </tr>';
 
 		str += '  <tr>';
@@ -196,7 +290,6 @@ $("#btnSubmit").on("click", function(){
 		
 		$("#guestbookListArea").prepend(str);
 	}
-	
 	
 	
 });

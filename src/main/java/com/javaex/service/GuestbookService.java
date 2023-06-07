@@ -14,7 +14,7 @@ public class GuestbookService {
 	@Autowired
 	private GuestbookDao guestbookDao;
 	
-	//방명록삭제 폼
+	//방명록삭제 폼(ajax도 같이 사용)
 	public void deleteGuest(GuestbookVo guestbookVo) {
 		System.out.println("GuestbookService.deleteGuest()");
         guestbookDao.deleteGuest(guestbookVo);
@@ -47,5 +47,6 @@ public class GuestbookService {
 		GuestbookVo guestVo = guestbookDao.selectGuest(no);
 		return guestVo;
 	}
+	
 
 }

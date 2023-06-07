@@ -59,5 +59,10 @@ public class GuestbookDao {
 		return guestbookVo;		
 		
 	}
+	
+	//ajax방명록 삭제
+	public void deleteGuest() {
+		System.out.println("GuestbookDao.deleteGuest()");
+	}
 
 }

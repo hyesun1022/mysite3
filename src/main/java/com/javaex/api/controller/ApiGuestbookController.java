@@ -18,7 +18,7 @@ import com.javaex.vo.JsonResult;
 public class ApiGuestbookController {
 	
 	@Autowired
-	private GuestbookService questbookService;
+	private GuestbookService guestbookService;
 
 
 	//ajax 전체리스트
@@ -26,7 +26,7 @@ public class ApiGuestbookController {
 	public String addList(Model model) {
 		System.out.println("ApiGuestbookController.addList()");
 		
-		List<GuestbookVo> guestList = questbookService.getGuestList();
+		List<GuestbookVo> guestList = guestbookService.getGuestList();
 		System.out.println(guestList);
 		
         model.addAttribute("guestList", guestList);
@@ -40,12 +40,22 @@ public class ApiGuestbookController {
 	@RequestMapping(value ="/api/guestbook/add",method = {RequestMethod.GET,RequestMethod.POST})
 	public JsonResult addList(@ModelAttribute GuestbookVo guestbookVo) {
 		System.out.println("ApiGuestbookController.add()");
-		GuestbookVo guestVo = questbookService.addGuestList(guestbookVo);
+		GuestbookVo guestVo = guestbookService.addGuestList(guestbookVo);
 		
 		//jsonResult에 담기
 		JsonResult jsonResult = new JsonResult();
 		jsonResult.success(guestVo);
  
 		return jsonResult;
+	}
+	
+	
+	//ajax 방명록 삭제
+	@RequestMapping(value="/api/guestbook/remove", method= {RequestMethod.GET,RequestMethod.POST})
+	public String remove(@ModelAttribute GuestbookVo guestbookVo) {
+		System.out.println("ApiGuestbookController.remove()");
+		guestbookService.deleteGuest(guestbookVo);
+		
+		return "";
 	}
 }
