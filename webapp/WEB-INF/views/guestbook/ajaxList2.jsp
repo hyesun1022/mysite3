@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
+<!-- json으로 데이타 주고 받기----------------------------------------------------------------------------------------->
 <html>
 <head>
 <meta charset="UTF-8">
@@ -90,27 +91,9 @@
 					
 				<!-- </form>	 -->
 				<div id="guestbookListArea">
-					<c:forEach items="${guestList}" var="guestbookVo">
-						<table id="t-${guestbookVo.no}" class="guestRead">
-							<colgroup>
-								<col style="width: 10%;">
-								<col style="width: 40%;">
-								<col style="width: 40%;">
-								<col style="width: 10%;">
-							</colgroup>
-							<tr>
-								<td>${guestbookVo.no}</td>
-								<td>${guestbookVo.name}</td>
-								<td>${guestbookVo.regDate}</td>
-								<td>
-								    <button type="button" class="btn btn-primary btn-sm btnModal" data-delno="${guestbookVo.no}">삭제</button>
-								</td>
-							</tr>
-							<tr>
-								<td colspan=4 class="text-left">${guestbookVo.content}</td>
-							</tr>
-						</table>
-					</c:forEach>
+					
+					<!-- 방명록 리스트 출력 영역 -->
+					
 				</div>	
 				<!-- //guestRead -->
 				
@@ -154,8 +137,71 @@
 </body>
 
 <script type="text/javascript">
+<!--전체리스트 가져오기  ---------------------------------------------------------------------->
+//돔 생성 후, 그리기 전 이벤트
+$(document).ready(function(){
+	//전체리스트 호출 가져오기
+	
+    fetchList();
+	
+});//ready end
 
-<!------------------------------------------------------------------------>
+    function fetchList(){
+		$.ajax({
+			url : "${pageContext.request.contextPath }/api/guestbook/list",		
+			type : "post",
+
+			dataType : "json",
+			success : function(jsonResult,dir){
+			       	console.log(jsonResult);
+				
+					var guestList = jsonResult.data;
+					
+					/*성공시 처리해야될 코드 작성*/
+				    for(var i=0;i<guestList.length; i++){
+			            render(guestList[i],"down");
+				    }
+				},
+				error : function(XHR, status, error) { 
+					console.error(status + " : " + error);
+				}
+	        });//ajax end
+    }//fetchList() end
+    
+     //그리기
+	function render(guestbookVo,dir){
+		
+		var str ="";
+		str += '<table id="t-'+ guestbookVo.no +'" class="guestRead">';
+		str += '  <colgroup>';
+		str += '	  <col style="width: 10%;">';
+		str += '	  <col style="width: 40%;">';
+		str += '	  <col style="width: 40%;">';
+		str += '	  <col style="width: 10%;">';
+		str += '  </colgroup>';
+		
+		str += '  <tr>';
+		str += '      <td>' + guestbookVo.no +'</td>';
+		str += '      <td>' + guestbookVo.name + '</td>';
+		str += '      <td>' + guestbookVo.regDate + '</td>';
+		str += '      <td><button type="button" class="btn btn-primary btn-sm btnModal" data-delno="'+ guestbookVo.no +'">삭제</button></td>';
+		str += '  </tr>';
+
+		str += '  <tr>';
+		str += '      <td colspan=4 class="text-left">' + guestbookVo.content + '</td>';
+		str += '  </tr>';
+		str += '</table>';
+		
+		if(dir =='up'){
+		    $("#guestbookListArea").prepend(str);
+		}else if(dir =='down'){
+			$("#guestbookListArea").append(str);
+		}else{
+			console.log("방향오류");
+		}
+	} //render() end
+<!--전체리스트 가져오기 끝---------------------------------------------------------------------->
+<!--모달창 삭제 클릭    ---------------------------------------------------------------------->	
 //모달창에 있는 삭제 버튼 클릭했을때(진짜 삭제)
 $("#btnDel").on("click","", function(){
 	console.log("삭제버튼 클릭");
@@ -200,8 +246,8 @@ $("#btnDel").on("click","", function(){
 	console.log("test입니다. "+guestbookVo.no);
 }); //진짜 삭제 function end
 
-
-<!------------------------------------------------------------------------>
+<!--모달창 삭제 클릭 끝  ---------------------------------------------------------------------->
+<!--삭제 모달창 호출    ---------------------------------------------------------------------->
 //삭제 모달창 호출 버튼 ->>모달창 뜸
 $("#guestbookListArea").on("click",".btnModal",function(){  //새로 추가된 방명록의 삭제를 하기위해 부모 div 아이디에 범위를 주고 클래스 btnModal에 이벤트를 추가
 	console.log("모달창 호출버튼 클릭");
@@ -222,8 +268,8 @@ $("#guestbookListArea").on("click",".btnModal",function(){  //새로 추가된 �
 	$('#myModal').modal('show');
 }); //모달창 호출 function end
 
-
-<!------------------------------------------------------------------------>
+<!--삭제 모달창 호출 끝  ---------------------------------------------------------------------->
+<!--방명록 저장버튼 클릭  ---------------------------------------------------------------------->
 //방명록 저장 버튼 클릭할때
 $("#btnSubmit").on("click", function(){
 	console.log("버튼클릭");
@@ -233,19 +279,21 @@ $("#btnSubmit").on("click", function(){
 	var password = $("[name='password']").val();
 	var content = $("[name='content']").val();
 	
+	
 	var guestbookVo ={
 	    name: name,
 	    password: password,
 	    content: content
 	};
 	
+	
 	//ajax통신 ->요청은 같은 기술 응답이 데이터만 온다
 	$.ajax({
 		
-		url : "${pageContext.request.contextPath }/api/guestbook/add",		
+		url : "${pageContext.request.contextPath }/api/guestbook/add2",		
 		type : "post",
-		//contentType : "application/json",
-		data : guestbookVo,
+		contentType : "application/json",
+		data : JSON.stringify(guestbookVo),
 
 		dataType : "json",
 		success : function(jsonResult){
@@ -255,7 +303,7 @@ $("#btnSubmit").on("click", function(){
 			if(jsonResult.result == "success"){
 				//정상처리
 				
-				render(jsonResult.data); //리스트에 추가
+				render(jsonResult.data,"up"); //reder로 리스트에 추가
 				
 				//등록폼 비우기
 				$("[name='name']").val("");
@@ -270,35 +318,7 @@ $("#btnSubmit").on("click", function(){
 			console.error(status + " : " + error);
 		}
     }); //ajax end
-	
-	
-	//방명록 리스트 그리기
-	function render(guestbookVo){
-		
-		var str ="";
-		str += '<table id="t-'+ guestbookVo.no +'" class="guestRead">';
-		str += '  <colgroup>';
-		str += '	  <col style="width: 10%;">';
-		str += '	  <col style="width: 40%;">';
-		str += '	  <col style="width: 40%;">';
-		str += '	  <col style="width: 10%;">';
-		str += '  </colgroup>';
-		
-		str += '  <tr>';
-		str += '      <td>' + guestbookVo.no +'</td>';
-		str += '      <td>' + guestbookVo.name + '</td>';
-		str += '      <td>' + guestbookVo.regDate + '</td>';
-		str += '      <td><button type="button" class="btn btn-primary btn-sm btnModal" data-delno="'+ guestbookVo.no +'">삭제</button></td>';
-		str += '  </tr>';
-
-		str += '  <tr>';
-		str += '      <td colspan=4 class="text-left">' + guestbookVo.content + '</td>';
-		str += '  </tr>';
-		str += '</table>';
-		
-		$("#guestbookListArea").prepend(str);
-	} //방명록 리스트 그리기 end
 }); //방명록 저장 function end
-
+<!--방명록 저장버튼 클릭 끝---------------------------------------------------------------------->
 </script>
 </html>

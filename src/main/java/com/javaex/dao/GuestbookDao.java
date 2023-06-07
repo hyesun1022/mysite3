@@ -14,13 +14,12 @@ public class GuestbookDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	//방명록 삭제
-	public void deleteGuest(GuestbookVo guestbookVo) {
+	//방명록 삭제(ajax방명록 삭제 같이사용)
+	public int deleteGuest(GuestbookVo guestbookVo) {
 		System.out.println("GuestbookDao.deleteGuest()");
 		
 		int count = sqlSession.delete("guestbook.delete",guestbookVo);
-		System.out.println(count);
-		
+		return count;
 	}
 	
 	//방명록 리스트
@@ -34,7 +33,6 @@ public class GuestbookDao {
 	public int insertGuest(GuestbookVo guestbookVo) {
 		System.out.println("GuestbookDao.insertGuest()");
 
-		
 		int count = sqlSession.insert("guestbook.insertGuest",guestbookVo);
         return count;
 	}
@@ -59,10 +57,4 @@ public class GuestbookDao {
 		return guestbookVo;		
 		
 	}
-	
-	//ajax방명록 삭제
-	public void deleteGuest() {
-		System.out.println("GuestbookDao.deleteGuest()");
-	}
-
 }

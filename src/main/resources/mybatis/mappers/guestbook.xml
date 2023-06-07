@@ -34,7 +34,7 @@
 	</select>
 
 
-    <!-- 방명록 삭제 (패스워드 비교)-->
+    <!-- 방명록 삭제 (패스워드 비교) => ajax방명록 삭제 같이사용-->
     <delete id="delete" parameterType="com.javaex.vo.GuestbookVo">
         <![CDATA[
              delete from guestbook

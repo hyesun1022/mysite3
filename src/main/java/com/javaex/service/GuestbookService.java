@@ -14,10 +14,11 @@ public class GuestbookService {
 	@Autowired
 	private GuestbookDao guestbookDao;
 	
-	//방명록삭제 폼(ajax도 같이 사용)
-	public void deleteGuest(GuestbookVo guestbookVo) {
+	//방명록 삭제(ajax방명록 삭제 같이사용)
+	public int deleteGuest(GuestbookVo guestbookVo) {
 		System.out.println("GuestbookService.deleteGuest()");
-        guestbookDao.deleteGuest(guestbookVo);
+        int count = guestbookDao.deleteGuest(guestbookVo);
+        return count;
 	}
 	
 	//방명록 리스트
