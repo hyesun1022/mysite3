@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
+
 <!-- json으로 데이타 주고 받기----------------------------------------------------------------------------------------->
 <html>
 <head>
@@ -29,7 +30,7 @@
 		<div id="nav">
 			<ul>
 				<li><a href="${pageContext.request.contextPath}/guestbook/addList">방명록</a></li>
-				<li><a href="">갤러리</a></li>
+				<li><a href="${pageContext.request.contextPath}/fileupload/form">갤러리</a></li>
 				<li><a href="${pageContext.request.contextPath}/board/list">게시판</a></li>
 				<li><a href="">입사지원서</a></li>
 			</ul>
@@ -130,8 +131,6 @@
     </div>
   </div>
 </div>
-
-
 <!-- 삭제폼 끝 ------------------------------------------------------------->
 
 </body>

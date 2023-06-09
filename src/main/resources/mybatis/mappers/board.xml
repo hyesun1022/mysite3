@@ -3,6 +3,20 @@
 
 <mapper namespace="board">
 
+    <!-- 게시판 전체 갯수 -->
+    <select id="totalCount" parameterType="String" resultType="int">
+       <![CDATA[
+          select count(*)
+          from board
+          ]]>   
+		  <if test=" value != '' ">
+		   where title like '%'||#{keyword}||'%'
+		  </if>
+		  <![CDATA[
+       ]]>
+    </select>
+
+
     <!-- 게시판 글수정 -->
     <update id="updateBoard" parameterType="com.javaex.vo.BoardVo">
       <![CDATA[
@@ -75,7 +89,50 @@
         and a.title like '%'||#{keyword}||'%'
         </if>
       <![CDATA[  
-        order by reg_date desc	
+        order by no desc	
+	  ]]>
+	</select>
+	
+	    <!-- 게시판 전체리스트 :페이징 -->
+	<select id="selectList3" parameterType="map" resultType="com.javaex.vo.BoardVo">
+	  <![CDATA[
+			select ort.rn,
+			       ort.no,
+			       ort.title,
+			       ort.content,
+			       ort.hit,
+			       to_char(ort.reg_date, 'YYYY-MM-DD HH:MI') regDate,
+			       ort.user_no,
+			       ort.name user_name
+			from (
+			        select rownum rn,
+			               ot.no,
+			               ot.title,
+			               ot.content,
+			               ot.hit,
+			               ot.reg_date,
+			               ot.user_no,
+			               ot.name
+			        from  (
+			               select  b.no,
+			                       b.title,
+			                       b.content,
+			                       b.hit,
+			                       b.reg_date,
+			                       b.user_no,
+			                       u.name
+			                from board b, users u
+			                where b.user_no = u.no
+			                 ]]>   
+					        <if test=" value != '' ">
+					        and b.title like '%'||#{keyword}||'%'
+					        </if>
+					      <![CDATA[ 
+			                order by no desc
+			                ) ot
+			        ) ort
+			where rn>= #{startRnum} 
+			and rn<= #{endRnum}	
 	  ]]>
 	</select>
 
