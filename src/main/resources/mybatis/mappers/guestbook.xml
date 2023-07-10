@@ -25,6 +25,7 @@
 		resultType="com.javaex.vo.GuestbookVo">
         <![CDATA[
              select no,
+                    password,
                     name,
                     content,
                     reg_date regDate

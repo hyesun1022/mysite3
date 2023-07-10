@@ -1,0 +1,54 @@
+@charset "utf-8";
+blockquote, body, dd, dl, dt, fieldset, figure, h1, h2, h3, h4, h5, h6, hr, html, iframe, legend, li, ol, p, pre, textarea, ul {margin:0;padding:0}
+h1, h2, h3, h4, h5, h6 {font-size:100%;font-weight:400}
+ul {list-style:none}
+button, input, select {margin:0}
+html {box-sizing:border-box}
+*, :after, :before {box-sizing:inherit}
+img, video {height:auto;max-width:100%}
+iframe {border:0}
+table {border-collapse:collapse;border-spacing:0}
+td, th {padding:0}
+
+*{margin:0;	padding:0;list-style: none;text-decoration: none;background-image: url(/bg01.png); background-repeat: repeat;}
+
+#wrap{	width:1200px;	height:800px;	background-color: #e0e0e0;	margin:0 auto;}
+
+.header{width:1200px;height:100px;background-color: blue;}
+
+.header>#logo{float: left;width:250px;height:100px;background-color: white;}
+
+.header>#login{	font-size: 14px;float: right;width:950px;height:50px;background-color:white;position: relative;}
+#login>ul {	margin-top: 15px;position: absolute;display: flex;gap: 10px;right:10px;}
+
+
+
+.header>#nav{text-align: center;font-size: 14px;float: right;width:950px;height:50px;background-color: white;}
+
+
+.header>#nav #menu{	float:left;	width:130px;height:47px;margin-left: 3px;margin-top: 3px;padding: 12px 0 0 0;
+	color:#e0e0e0;border-radius: 5px 5px 0 0;	background-color: rgb(14, 33, 133);}
+
+.header>#join{float: right;	width:950px;height:50px;background-color: white;}
+
+/* 테이블 */
+p{text-align: left; margin:20px 40px; font-weight:bold;}
+.content{width:1200px;height:750px;	border-radius: 10px;background-color: rgb(14, 33, 133);}
+
+.content> .row {border-radius: 10px; float:left; width:95%;height:92%; background-color:white; margin-top: 30px;margin-left:30px;}
+.content> .row-1 {border-radius: 10px; float:left; width:95%;height:83%; background-color:white; margin-left:30px;}
+.row-2 {float:left; width:100%; height:50px;}
+.row-3 {float:left; width:550px; height:30px; color:white; padding-left:100px; text-align:left;}
+.border{height:40%; border-style:solid; border-radius: 10px;border-color:darkgray; margin:30px;}
+.form-group{padding-left:50px; padding-bottom:30px; float:left;}
+
+.col-1 {float:left; width:20%; height:55%; margin:0; padding:20px; font-size:13px;}
+.col-2 {float:center; margin-top:100px;}
+.col-3 {width:100%;height:100px; margin:0; float:left;color:white;}
+.col-4 {float:left; border-style:solid; border-width:1px; border-color:lightgray; border-radius:10px; margin-top:30px; margin-left:30px; width:46%;height:90%;}
+.col-5 {float:left; border-style:solid; border-width:1px; border-color:lightgray; border-radius:10px; margin-top:30px; margin-left:15px; width:46%;height:90%;}
+
+.content>#rightbox{	float: right;	width:340px;	height:500px;	margin-top: 10px;	margin-right: 10px;	border-radius: 5px;
+	background-color: rgb(200, 219, 236);}
+
+.footer{width:1200px;height:50px;background-color: rgb(252, 250, 249);}

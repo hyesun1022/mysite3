@@ -19,5 +19,19 @@ public class MainController {
 		
 		return "/main/main";
 	}
+	
+	@RequestMapping(value="/test",method = {RequestMethod.GET,RequestMethod.POST})
+	public String test() {
+		System.out.println("test()");
+		
+		return "/test/test";
+	}
+	
+	@RequestMapping(value="/test2",method = {RequestMethod.GET,RequestMethod.POST})
+	public String test2() {
+		System.out.println("test2()");
+		
+		return "/test/test2";
+	}
 
 }

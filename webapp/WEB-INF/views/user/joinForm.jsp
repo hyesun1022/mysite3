@@ -61,33 +61,27 @@
 
 			<div id="user">
 				<div id="joinForm">
-					<form action="${pageContext.request.contextPath}/user/join"
+					<form id="joinSubmitForm" action="${pageContext.request.contextPath}/user/join"
 						method="get">
 
 						<!-- 아이디 -->
 						<div class="form-group">
-							<label class="form-text" for="input-uid">아이디</label> <input
-								type="text" id="input-uid" name="id" value=""
-								placeholder="아이디를 입력하세요" autofocus required
-								onKeypress="javascript:if(event.keyCode==13) {search_onclick_submit}">
+							<label class="form-text" for="input-uid">아이디</label> <input type="text" id="input-uid" name="id" value=""
+								placeholder="아이디를 입력하세요" autofocus onKeypress="javascript:if(event.keyCode==13) {search_onclick_submit}">
 							<button type="button" id="btnIdCheck">중복체크</button>
 							<p id="idcheckMsg" align="center" ></p>
 						</div>
 
 						<!-- 비밀번호 -->
 						<div class="form-group">
-							<label class="form-text" for="input-pass">패스워드</label> <input
-								type="text" id="input-pass" name="password" value=""
-								placeholder="비밀번호를 입력하세요" required
-								onKeypress="javascript:if(event.keyCode==13) {search_onclick_submit}">
+							<label class="form-text" for="input-pass">패스워드</label> <input type="text" id="input-pass" name="password" value=""
+								placeholder="비밀번호를 입력하세요" onKeypress="javascript:if(event.keyCode==13) {search_onclick_submit}">
 						</div>
 
 						<!-- 이름 -->
 						<div class="form-group">
-							<label class="form-text" for="input-name">이름</label> <input
-								type="text" id="input-name" name="name" value=""
-								placeholder="이름을 입력하세요" required
-								onKeypress="javascript:if(event.keyCode==13) {search_onclick_submit}">
+							<label class="form-text" for="input-name">이름</label> <input type="text" id="input-name" name="name" value=""
+								placeholder="이름을 입력하세요" onKeypress="javascript:if(event.keyCode==13) {search_onclick_submit}">
 						</div>
 
 						<!-- //나이 -->
@@ -101,9 +95,8 @@
 
 						<!-- 약관동의 -->
 						<div class="form-group">
-							<span class="form-text">약관동의</span> <input type="checkbox"
-								id="chk-agree" value="" name=""> <label for="chk-agree">서비스
-								약관에 동의합니다.</label>
+							<span class="form-text">약관동의</span> <input type="checkbox" id="chk-agree" value="" name=""> 
+							<label for="chk-agree">서비스	약관에 동의합니다.</label>
 						</div>
 
 						<!-- 버튼영역 -->
@@ -112,6 +105,9 @@
 						</div>
 
 					</form>
+					
+					<a id="naver" href="https://www.naver.com/">네이버</a>
+					
 				</div>
 				<!-- //joinForm -->
 			</div>
@@ -129,9 +125,47 @@
 </body>
 
 <script type="text/javascript">
+
+    //예제)원래의 태그의 기능을 사용하지 않을때
+    $("#naver").on("click", function(event){
+    	event.preventDefault();
+    	
+    });
+    
+
+    //회원 가입 버튼을 눌렀을 때 : 전송submit은 form에 이벤트
+    $("#joinSubmitForm").on("submit", function(){
+    	console.log("전송버튼 클릭");
+    	
+    	//아이디 체크
+    	var id = $("#input-uid").val();
+    	if(id.length < 1){ //입력안했으면 
+    		alert("아이디를 입력해주세요");
+    		return false;
+    	}
+    	
+    	//패스워드 체크...
+    	var password = $("#input-pass").val();
+    	if(password.length < 1){ //입력안했으면 
+    		alert("비밀번호를 입력해주세요");
+    		return false;
+    	}
+    	
+    	//약관동의 유무
+    	var agree = $("#chk-agree").is(":checked");
+    	if(agree == false){
+    		alert("약관에 동의해 주세요");
+    		return false;
+    	}
+    	
+    	return true;
+    });
+
+
+
     //아이디 체크 버튼 클릭했을때
     $("#btnIdCheck").on("click",function(){
-    	console.log("버튼클릭");
+    	console.log("아이디체크 버튼 클릭");
     	
     	//id 추출
         var id = $("[name=id]").val();   
