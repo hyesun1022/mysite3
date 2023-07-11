@@ -33,5 +33,12 @@ public class MainController {
 		
 		return "/test/test2";
 	}
+	
+	@RequestMapping(value="/test3",method = {RequestMethod.GET,RequestMethod.POST})
+	public String test3() {
+		System.out.println("test3()");
+		
+		return "/test/test3";
+	}
 
 }
